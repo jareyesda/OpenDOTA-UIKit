@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		201BCA2C2661C7B4006DD4B8 /* HeroManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BCA2B2661C7B4006DD4B8 /* HeroManager.swift */; };
 		20678BD62660929000EDF1FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD52660929000EDF1FB /* AppDelegate.swift */; };
 		20678BD82660929000EDF1FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD72660929000EDF1FB /* SceneDelegate.swift */; };
 		20678BDA2660929000EDF1FB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD92660929000EDF1FB /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		201BCA2B2661C7B4006DD4B8 /* HeroManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroManager.swift; sourceTree = "<group>"; };
 		20678BD22660929000EDF1FB /* OpenDotaAPI-UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenDotaAPI-UIKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20678BD52660929000EDF1FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20678BD72660929000EDF1FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				20678BD52660929000EDF1FB /* AppDelegate.swift */,
 				20678BD72660929000EDF1FB /* SceneDelegate.swift */,
 				20678BD92660929000EDF1FB /* ViewController.swift */,
+				201BCA2B2661C7B4006DD4B8 /* HeroManager.swift */,
 				20678BEA266093A300EDF1FB /* Hero.swift */,
 				20678BDB2660929000EDF1FB /* Main.storyboard */,
 				20678BDE2660929200EDF1FB /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 				20678BDA2660929000EDF1FB /* ViewController.swift in Sources */,
 				20678BD62660929000EDF1FB /* AppDelegate.swift in Sources */,
 				20678BD82660929000EDF1FB /* SceneDelegate.swift in Sources */,
+				201BCA2C2661C7B4006DD4B8 /* HeroManager.swift in Sources */,
 				20678BEB266093A300EDF1FB /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

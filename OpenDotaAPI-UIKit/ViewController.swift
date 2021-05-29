@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource {
     
+    let apiURL = "https://api.opendota.com/api/herostats#"
+    
     var fetchedData = [HeroElement]()
     
     @IBOutlet var heroTableView: UITableView!
@@ -29,7 +31,46 @@ class ViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = heroTableView.dequeueReusableCell(withIdentifier: "heroCell")
         
-        cell?.textLabel?.text = fetchedData[indexPath.row].name
+//        func formatName(_ name: String) -> String {
+//            let formattedName = name.lowercased()
+//            return formattedName.replacingOccurrences(of: " ", with: "_")
+//        }
+        
+        let name = fetchedData[indexPath.row].name
+        cell?.textLabel?.text = name
+        
+        let iconURL = fetchedData[indexPath.row].icon
+        let url = URL(string: "https://api.opendota.com\(iconURL)")
+        
+        
+        cell?.imageView?.image = nil
+        cell?.tag = indexPath.row
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            guard let data = data, error == nil else { return }
+
+            DispatchQueue.main.async {
+                if cell!.tag == indexPath.row {
+                    cell?.imageView?.image = UIImage(data: data)
+                }
+            }
+        }
+        task.resume()
+        
+//        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//        let heroIcon = UIImage(data: data!)
+//        cell?.imageView?.image = heroIcon
+        
+        
+
+//        DispatchQueue.global().async {
+//            let data = try? Data(contentsOf: url!)
+//            DispatchQueue.main.async {
+//                if let heroIcon = UIImage(data: data!) {
+//                    cell?.imageView?.image = heroIcon
+//                }
+//            }
+//        }
+        
         
         return cell!
     }
@@ -38,7 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         
         fetchedData = []
         
-        let url = "https://api.opendota.com/api/herostats#"
+        let url = apiURL
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
@@ -100,6 +141,5 @@ class ViewController: UIViewController, UITableViewDataSource {
         task.resume()
         
     }
-    
     
 }
