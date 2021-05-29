@@ -44,7 +44,7 @@ class ViewController: UIViewController, UITableViewDataSource {
 //        cell?.imageView?.image = image
         
         let iconURL = fetchedData[indexPath.row].icon
-//        let url = URL(string: "https://api.opendota.com\(iconURL)")
+        let url = URL(string: "https://api.opendota.com\(iconURL)")
 //        let url = "https://api.opendota.com\(iconURL)"
         
         
@@ -85,18 +85,29 @@ class ViewController: UIViewController, UITableViewDataSource {
 //        }
         
         // This doesn't work because the app crashes when the last cell is reached/created
-        // ~~~~~~~~~~~~~~~~ 
-        DispatchQueue.global(qos: .background).async {
-            let url = URL(string: "https://api.opendota.com\(iconURL)")
-            let data = try? Data(contentsOf: url!)
-            if let image = UIImage(data: data!) {
-                DispatchQueue.main.async {
-                    self.imageCache.setObject(image, forKey: NSString(string: self.fetchedData[indexPath.row].name))
-                    cell?.imageView?.image = image
-                }
+        // ~~~~~~~~~~~~~~~~
+//        DispatchQueue.global(qos: .background).async {
+//            let url = URL(string: "https://api.opendota.com\(iconURL)")
+//            let data = try? Data(contentsOf: url!)
+//            if let image = UIImage(data: data!) {
+//                DispatchQueue.main.async {
+//                    self.imageCache.setObject(image, forKey: NSString(string: self.fetchedData[indexPath.row].name))
+//                    cell?.imageView?.image = image
+//                }
+//            } else {
+//                cell?.imageView?.image = nil
+//            }
+//        }
+        
+        if let cachedImage = imageCache.object(forKey: NSString(string: String(fetchedData[indexPath.row].id))) {
+            cell?.imageView?.image = cachedImage
+        } else {
+            if let data = try? Data(contentsOf: url!) {
+                let heroIcon = UIImage(data: data)
+                cell?.imageView?.image = heroIcon
             } else {
                 cell?.imageView?.image = nil
-            }
+            }//make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         }
         
 //        cell?.imageView?.loadImageUsingCache(withUrl: url)
@@ -158,7 +169,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                         let imageUrl = URL(string:"https://api.opendota.com\(icon)")
                         if let imageData = try? Data(contentsOf: imageUrl!) {
                             let image = UIImage(data: imageData)
-                            self.heroIcons.append(image!)
+                            self.imageCache.setObject(image!, forKey: NSString(string: (String(id))))
                         }
                         
                         self.fetchedData.append(HeroElement(id: id, name: name, primaryAttr: PrimaryAttr(rawValue: primaryAttr)!, attackType: AttackType(rawValue: attackType)!, roles: roles, img: img, icon: icon, baseHealth: baseHealth, baseHealthRegen: baseHealthRegen as? Double, baseMana: baseMana, baseManaRegen: baseManaRegen, baseArmor: baseArmor, baseMr: baseMr, baseAttackMin: baseAttackMin, baseAttackMax: baseAttackMax, baseStr: baseStr, baseAgi: baseAgi, baseInt: baseInt, strGain: strGain, agiGain: agiGain, intGain: intGain, attackRange: attackRange, projectileSpeed: projectileSpeed, attackRate: attackRate, moveSpeed: moveSpeed, turnRate: turnRate ?? 0))
