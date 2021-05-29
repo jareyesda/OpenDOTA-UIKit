@@ -11,6 +11,9 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     let apiURL = "https://api.opendota.com/api/herostats#"
     
+//    let imageCache = NSCache<NSString, HeroElement>()
+    
+    
     var fetchedData = [HeroElement]()
     
     @IBOutlet var heroTableView: UITableView!
@@ -40,23 +43,30 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell?.textLabel?.text = name
         
         let iconURL = fetchedData[indexPath.row].icon
-        let url = URL(string: "https://api.opendota.com\(iconURL)")
+//        let url = URL(string: "https://api.opendota.com\(iconURL)")
+        let url = "https://api.opendota.com\(iconURL)"
         
         
-        cell?.imageView?.image = nil
-        cell?.tag = indexPath.row
-        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            guard let data = data, error == nil else { return }
-
-            DispatchQueue.main.async {
-                if cell!.tag == indexPath.row {
-                    cell?.imageView?.image = UIImage(data: data)
-                }
-            }
-        }
-        task.resume()
+//        cell?.imageView?.image = nil
+//        cell?.tag = indexPath.row
+//        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+//            guard let data = data, error == nil else { return }
+//
+//            DispatchQueue.main.async {
+//                if cell!.tag == indexPath.row {
+//                    cell?.imageView?.image = UIImage(data: data)
+//                }
+//            }
+//        }
+//        task.resume()
         
-//        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//        if let data = try? Data(contentsOf: url!) {
+//            let heroIcon = UIImage(data: data)
+//            cell?.imageView?.image = heroIcon
+//        } else {
+//            cell?.imageView?.image = nil
+//        }//make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+        
 //        let heroIcon = UIImage(data: data!)
 //        cell?.imageView?.image = heroIcon
         
@@ -70,6 +80,20 @@ class ViewController: UIViewController, UITableViewDataSource {
 //                }
 //            }
 //        }
+        
+//        DispatchQueue.global(qos: .background).async {
+//            let url = URL(string: "https://api.opendota.com\(iconURL)")
+//            let data = try? Data(contentsOf: url!)
+//            let image: UIImage = UIImage(data: data!)!
+//
+//            DispatchQueue.main.async {
+//                self.imageCahce.setObject(image, forKey: NSString(string: fetchedData[indexPath.row].name))
+//
+//                cell?.imageView?.image = image
+//            }
+//        }
+        
+        cell?.imageView?.loadImageUsingCache(withUrl: url)
         
         
         return cell!
@@ -142,4 +166,41 @@ class ViewController: UIViewController, UITableViewDataSource {
         
     }
     
+}
+
+let imageCache = NSCache<NSString, UIImage>()
+extension UIImageView {
+    func loadImageUsingCache(withUrl urlString : String) {
+        let url = URL(string: urlString)
+        if url == nil {return}
+        self.image = nil
+
+        // check cached image
+        if let cachedImage = imageCache.object(forKey: urlString as NSString)  {
+            self.image = cachedImage
+            return
+        }
+
+//        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
+//        addSubview(activityIndicator)
+//        activityIndicator.startAnimating()
+//        activityIndicator.center = self.center
+
+        // if not, download image from url
+        URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+
+            DispatchQueue.main.async {
+                if let image = UIImage(data: data!) {
+                    imageCache.setObject(image, forKey: urlString as NSString)
+                    self.image = image
+//                    activityIndicator.removeFromSuperview()
+                }
+            }
+
+        }).resume()
+    }
 }

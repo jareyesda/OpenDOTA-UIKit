@@ -13,24 +13,54 @@
 import Foundation
 
 // MARK: - HeroElement
-struct HeroElement {
-    let id: Int
-    let name: String
-    let primaryAttr: PrimaryAttr
-    let attackType: AttackType
-    let roles: [Any]
-    let img, icon: String
-    let baseHealth: Int
-    let baseHealthRegen: Double?
-    let baseMana: Int
-    let baseManaRegen, baseArmor: Double
-    let baseMr, baseAttackMin, baseAttackMax, baseStr: Int
-    let baseAgi, baseInt: Int
-    let strGain, agiGain, intGain: Double
-    let attackRange, projectileSpeed: Int
-    let attackRate: Double
-    let moveSpeed: Int
-    let turnRate: Double?
+class HeroElement {
+    var id: Int = 0
+    var name: String = ""
+    var primaryAttr: PrimaryAttr = .agi
+    var attackType: AttackType = .melee
+    var roles: [Any] = []
+    var img = "", icon: String = ""
+    var baseHealth: Int = 0
+    var baseHealthRegen: Double? = nil
+    var baseMana: Int = 0
+    var baseManaRegen = 0.0, baseArmor: Double = 0.0
+    var baseMr = 0, baseAttackMin = 0, baseAttackMax = 0, baseStr: Int = 0
+    var baseAgi = 0, baseInt: Int = 0
+    var strGain = 0.0, agiGain = 0.0, intGain: Double = 0.0
+    var attackRange = 0, projectileSpeed: Int = 0
+    var attackRate: Double = 0.0
+    var moveSpeed: Int = 0
+    var turnRate: Double? = nil
+    
+    init(id: Int, name: String, primaryAttr: PrimaryAttr, attackType: AttackType, roles: [Any], img: String, icon: String, baseHealth: Int, baseHealthRegen: Double?, baseMana: Int, baseManaRegen: Double, baseArmor: Double, baseMr: Int, baseAttackMin: Int, baseAttackMax: Int, baseStr: Int, baseAgi: Int, baseInt: Int, strGain: Double, agiGain: Double, intGain: Double, attackRange: Int, projectileSpeed: Int, attackRate: Double, moveSpeed: Int, turnRate: Double?) {
+        
+        self.id = id
+        self.name = name
+        self.primaryAttr = primaryAttr
+        self.attackType = attackType
+        self.roles = roles
+        self.img = img
+        self.icon = icon
+        self.baseHealth = baseHealth
+        self.baseHealthRegen = baseHealthRegen
+        self.baseMana = baseMana
+        self.baseManaRegen = baseManaRegen
+        self.baseArmor = baseArmor
+        self.baseMr = baseMr
+        self.baseAttackMin = baseAttackMin
+        self.baseAttackMax = baseAttackMax
+        self.baseStr = baseStr
+        self.baseAgi = baseStr
+        self.baseInt = baseInt
+        self.strGain = strGain
+        self.agiGain = agiGain
+        self.intGain = intGain
+        self.attackRange = attackRange
+        self.projectileSpeed = projectileSpeed
+        self.attackRate = attackRate
+        self.moveSpeed = moveSpeed
+        self.turnRate = turnRate
+    }
 
     enum CodingKeys: String, CodingKey {
         case id, name
