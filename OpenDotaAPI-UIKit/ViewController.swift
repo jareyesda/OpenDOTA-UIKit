@@ -10,11 +10,14 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource {
     
     let apiURL = "https://api.opendota.com/api/herostats#"
+    let imageCache = NSCache<NSString, UIImage>()
+
     
 //    let imageCache = NSCache<NSString, HeroElement>()
     
     
     var fetchedData = [HeroElement]()
+    var heroIcons = [UIImage]()
     
     @IBOutlet var heroTableView: UITableView!
     
@@ -28,25 +31,25 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedData.count
+        return (fetchedData.count - 1)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = heroTableView.dequeueReusableCell(withIdentifier: "heroCell")
         
-//        func formatName(_ name: String) -> String {
-//            let formattedName = name.lowercased()
-//            return formattedName.replacingOccurrences(of: " ", with: "_")
-//        }
-        
         let name = fetchedData[indexPath.row].name
         cell?.textLabel?.text = name
         
+//        let image = heroIcons[indexPath.row]
+//        cell?.imageView?.image = image
+        
         let iconURL = fetchedData[indexPath.row].icon
 //        let url = URL(string: "https://api.opendota.com\(iconURL)")
-        let url = "https://api.opendota.com\(iconURL)"
+//        let url = "https://api.opendota.com\(iconURL)"
         
         
+        // ** This method doesn't work because it only sets icons when the cell is pressed, and they are deleted when cell is deleted.
+        // ~~~~~~~~~~~~~~~~
 //        cell?.imageView?.image = nil
 //        cell?.tag = indexPath.row
 //        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -60,15 +63,15 @@ class ViewController: UIViewController, UITableViewDataSource {
 //        }
 //        task.resume()
         
+        // ** This method doesn't work because a network call is made everytime a cell is created. Therefore its too laggy
+        // ~~~~~~~~~~~~~~~~
+        
 //        if let data = try? Data(contentsOf: url!) {
 //            let heroIcon = UIImage(data: data)
 //            cell?.imageView?.image = heroIcon
 //        } else {
 //            cell?.imageView?.image = nil
 //        }//make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-        
-//        let heroIcon = UIImage(data: data!)
-//        cell?.imageView?.image = heroIcon
         
         
 
@@ -81,19 +84,22 @@ class ViewController: UIViewController, UITableViewDataSource {
 //            }
 //        }
         
-//        DispatchQueue.global(qos: .background).async {
-//            let url = URL(string: "https://api.opendota.com\(iconURL)")
-//            let data = try? Data(contentsOf: url!)
-//            let image: UIImage = UIImage(data: data!)!
-//
-//            DispatchQueue.main.async {
-//                self.imageCahce.setObject(image, forKey: NSString(string: fetchedData[indexPath.row].name))
-//
-//                cell?.imageView?.image = image
-//            }
-//        }
+        // This doesn't work because the app crashes when the last cell is reached/created
+        // ~~~~~~~~~~~~~~~~ 
+        DispatchQueue.global(qos: .background).async {
+            let url = URL(string: "https://api.opendota.com\(iconURL)")
+            let data = try? Data(contentsOf: url!)
+            if let image = UIImage(data: data!) {
+                DispatchQueue.main.async {
+                    self.imageCache.setObject(image, forKey: NSString(string: self.fetchedData[indexPath.row].name))
+                    cell?.imageView?.image = image
+                }
+            } else {
+                cell?.imageView?.image = nil
+            }
+        }
         
-        cell?.imageView?.loadImageUsingCache(withUrl: url)
+//        cell?.imageView?.loadImageUsingCache(withUrl: url)
         
         
         return cell!
@@ -102,6 +108,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     func parseData() {
         
         fetchedData = []
+        heroIcons = []
         
         let url = apiURL
         var request = URLRequest(url: URL(string: url)!)
@@ -148,10 +155,18 @@ class ViewController: UIViewController, UITableViewDataSource {
                         let moveSpeed = eachHero["move_speed"] as! Int
                         let turnRate = eachHero["turn_rate"] as? Double?
                         
+                        let imageUrl = URL(string:"https://api.opendota.com\(icon)")
+                        if let imageData = try? Data(contentsOf: imageUrl!) {
+                            let image = UIImage(data: imageData)
+                            self.heroIcons.append(image!)
+                        }
+                        
                         self.fetchedData.append(HeroElement(id: id, name: name, primaryAttr: PrimaryAttr(rawValue: primaryAttr)!, attackType: AttackType(rawValue: attackType)!, roles: roles, img: img, icon: icon, baseHealth: baseHealth, baseHealthRegen: baseHealthRegen as? Double, baseMana: baseMana, baseManaRegen: baseManaRegen, baseArmor: baseArmor, baseMr: baseMr, baseAttackMin: baseAttackMin, baseAttackMax: baseAttackMax, baseStr: baseStr, baseAgi: baseAgi, baseInt: baseInt, strGain: strGain, agiGain: agiGain, intGain: intGain, attackRange: attackRange, projectileSpeed: projectileSpeed, attackRate: attackRate, moveSpeed: moveSpeed, turnRate: turnRate ?? 0))
                         
                     }
                     
+                    print(self.heroIcons.count)
+                    print(self.fetchedData.count)
                     self.heroTableView.reloadData()
                     
                     
@@ -181,11 +196,6 @@ extension UIImageView {
             return
         }
 
-//        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
-//        addSubview(activityIndicator)
-//        activityIndicator.startAnimating()
-//        activityIndicator.center = self.center
-
         // if not, download image from url
         URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
             if error != nil {
@@ -197,7 +207,6 @@ extension UIImageView {
                 if let image = UIImage(data: data!) {
                     imageCache.setObject(image, forKey: urlString as NSString)
                     self.image = image
-//                    activityIndicator.removeFromSuperview()
                 }
             }
 
