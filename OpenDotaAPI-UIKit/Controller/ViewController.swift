@@ -13,14 +13,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let apiURL = "https://api.opendota.com/api/herostats#"
     
     // Data sources for our heroTableView
-    let imageCache = NSCache<NSString, UIImage>()
+    let iconCache = NSCache<NSString, UIImage>()
     var fetchedData = [HeroElement]()
     
     @IBOutlet var heroTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         heroTableView.dataSource = self
         heroTableView.delegate = self
@@ -83,7 +82,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         let imageUrl = URL(string:"https://api.opendota.com\(icon)")
                         if let imageData = try? Data(contentsOf: imageUrl!) {
                             let image = UIImage(data: imageData)
-                            self.imageCache.setObject(image!, forKey: NSString(string: (String(id))))
+                            self.iconCache.setObject(image!, forKey: NSString(string: (String(id))))
                         }
 
                         self.fetchedData.append(HeroElement(id: id, name: name, primaryAttr: PrimaryAttr(rawValue: primaryAttr)!, attackType: AttackType(rawValue: attackType)!, roles: roles, img: img, icon: icon, baseHealth: baseHealth, baseHealthRegen: baseHealthRegen as? Double, baseMana: baseMana, baseManaRegen: baseManaRegen, baseArmor: baseArmor, baseMr: baseMr, baseAttackMin: baseAttackMin, baseAttackMax: baseAttackMax, baseStr: baseStr, baseAgi: baseAgi, baseInt: baseInt, strGain: strGain, agiGain: agiGain, intGain: intGain, attackRange: attackRange, projectileSpeed: projectileSpeed, attackRate: attackRate, moveSpeed: moveSpeed, turnRate: turnRate ?? 0))
@@ -121,7 +120,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let url = URL(string: "https://api.opendota.com\(iconURL)")
         
         // The code below is a performance improvement. In which images are cached when loaded and persisted once loaded.
-        if let cachedImage = imageCache.object(forKey: NSString(string: String(fetchedData[indexPath.row].id))) {
+        if let cachedImage = iconCache.object(forKey: NSString(string: String(fetchedData[indexPath.row].id))) {
             cell?.imageView?.image = cachedImage
         } else {
             if let data = try? Data(contentsOf: url!) {
@@ -137,16 +136,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showHero", sender: self)
-        
-        let heroIndex = heroTableView.indexPathForSelectedRow?.row
-        print(fetchedData[heroIndex!].attackRange)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let destination = segue.destination as? DetailViewController {
+            
             let heroIndex = heroTableView.indexPathForSelectedRow?.row
+            
             destination.name = fetchedData[heroIndex!].name
+            destination.primaryAttr = fetchedData[heroIndex!].primaryAttr.rawValue
+            destination.attackType = fetchedData[heroIndex!].attackType.rawValue
+            destination.roles = fetchedData[heroIndex!].roles
+            
+            let imageURL = fetchedData[heroIndex!].img
+            let url = URL(string: "https://api.opendota.com\(imageURL)")
+            if let data = try? Data(contentsOf: url!) {
+                let heroImage = UIImage(data: data)
+                destination.image = heroImage
+            }
+            
+//            destination.heroStats =
+            
+            
         }
     }
     
