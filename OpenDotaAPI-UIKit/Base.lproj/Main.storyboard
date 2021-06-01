@@ -17,15 +17,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kWy-6s-t4E">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="heroCell" id="msC-eB-ioT">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="heroCell" textLabel="VBG-hR-z0i" style="IBUITableViewCellStyleDefault" id="msC-eB-ioT">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="msC-eB-ioT" id="wjg-Tt-sSq">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VBG-hR-z0i">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -40,13 +49,72 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kWy-6s-t4E" secondAttribute="bottom" id="sSL-0B-oLk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Zfg-Qc-yKP"/>
                     <connections>
                         <outlet property="heroTableView" destination="kWy-6s-t4E" id="won-F1-i6b"/>
+                        <segue destination="eHO-0S-TsP" kind="show" identifier="showHero" id="cDF-lM-nhW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-219" y="119"/>
+            <point key="canvasLocation" x="2518.840579710145" y="110.49107142857143"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="d3P-mg-m1c">
+            <objects>
+                <viewController id="eHO-0S-TsP" customClass="DetailViewController" customModule="OpenDotaAPI_UIKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pCP-lr-K1n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ho3-8h-XF8">
+                                <rect key="frame" x="186" y="114" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zm4-3Z-VyD">
+                                <rect key="frame" x="87" y="174" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DDD-Lf-dYT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Zm4-3Z-VyD" firstAttribute="leading" secondItem="DDD-Lf-dYT" secondAttribute="leading" constant="87" id="DBv-As-gB0"/>
+                            <constraint firstItem="Ho3-8h-XF8" firstAttribute="top" secondItem="DDD-Lf-dYT" secondAttribute="top" constant="26" id="YN2-OY-38h"/>
+                            <constraint firstItem="Zm4-3Z-VyD" firstAttribute="top" secondItem="Ho3-8h-XF8" secondAttribute="bottom" constant="39" id="aaP-Dm-Etr"/>
+                            <constraint firstItem="DDD-Lf-dYT" firstAttribute="bottom" secondItem="Zm4-3Z-VyD" secondAttribute="bottom" constant="560" id="gtj-i7-Zu4"/>
+                            <constraint firstItem="Ho3-8h-XF8" firstAttribute="centerX" secondItem="pCP-lr-K1n" secondAttribute="centerX" id="j1m-df-aV4"/>
+                            <constraint firstItem="Ho3-8h-XF8" firstAttribute="centerX" secondItem="Zm4-3Z-VyD" secondAttribute="centerX" id="l22-qc-O5h"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bvR-ML-dWB"/>
+                    <connections>
+                        <outlet property="heroImage" destination="Zm4-3Z-VyD" id="Nvv-8R-Qjo"/>
+                        <outlet property="heroName" destination="Ho3-8h-XF8" id="x51-bm-Cb1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SKa-ms-Tuu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3276.811594202899" y="109.82142857142857"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="u2b-U1-006">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wLH-wC-DKr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZLi-WM-CtN">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="sWC-lh-1MP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ya4-VG-Um0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1608.6956521739132" y="110.49107142857143"/>
         </scene>
     </scenes>
     <resources>
