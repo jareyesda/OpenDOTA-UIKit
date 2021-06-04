@@ -58,15 +58,21 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "statsCell")!
-
         let stat = Array(heroStats.keys)[indexPath.row]
         let value = Array(heroStats.values)[indexPath.row]
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "statsCell", for: indexPath)
         
         cell.textLabel?.text = stat
         cell.detailTextLabel?.text = value as? String
-        
+
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: false)
+        
     }
 
 }

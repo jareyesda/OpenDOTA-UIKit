@@ -10,7 +10,7 @@ import UIKit
 class StatsCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: "statsCell")
     }
 
     required init?(coder aDecoder: NSCoder) {
