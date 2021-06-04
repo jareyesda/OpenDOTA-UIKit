@@ -41,6 +41,9 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
         heroAttackType.text = attackType.uppercased()
         print(heroStats)
         
+        let cellNib = UINib(nibName: "StatsCell", bundle: nil)
+        statsTableView.register(cellNib, forCellReuseIdentifier: "statsCell")
+        
     }
     
     @IBAction func viewGuidePressed(_ sender: Any) {
@@ -61,11 +64,11 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
         let stat = Array(heroStats.keys)[indexPath.row]
         let value = Array(heroStats.values)[indexPath.row]
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "statsCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "statsCell", for: indexPath) as! StatsCell
         
-        cell.textLabel?.text = stat
-        cell.detailTextLabel?.text = value as? String
-
+        cell.statLabel.text = stat
+        cell.valueLabel.text = (value as! String)
+        
         return cell
     }
     

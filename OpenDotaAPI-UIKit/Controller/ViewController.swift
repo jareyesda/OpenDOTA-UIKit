@@ -157,25 +157,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             
             // Try to change for a for-loop. but this method works and is straight forward enough
-            destination.heroStats["Base Health"] = fetchedData[heroIndex!].baseHealth
-            destination.heroStats["Base Health Regen"] = fetchedData[heroIndex!].baseHealthRegen
-            destination.heroStats["Base Mana"] = fetchedData[heroIndex!].baseMana
-            destination.heroStats["Base Mana Regen"] = fetchedData[heroIndex!].baseManaRegen
-            destination.heroStats["Base Armor"] = fetchedData[heroIndex!].baseArmor
-            destination.heroStats["Base Magic Resistance"] = fetchedData[heroIndex!].baseMr
-            destination.heroStats["Base Attack Minimum"] = fetchedData[heroIndex!].baseAttackMin
-            destination.heroStats["Base Atack Max"] = fetchedData[heroIndex!].baseAttackMax
-            destination.heroStats["Base Strength"] = fetchedData[heroIndex!].baseStr
-            destination.heroStats["Base Agility"] = fetchedData[heroIndex!].baseAgi
-            destination.heroStats["Base Intellect"] = fetchedData[heroIndex!].baseInt
-            destination.heroStats["Strength Gain"] = fetchedData[heroIndex!].strGain
-            destination.heroStats["Agility Gain"] = fetchedData[heroIndex!].agiGain
-            destination.heroStats["Intellect Gain"] = fetchedData[heroIndex!].intGain
-            destination.heroStats["Attack Range"] = fetchedData[heroIndex!].attackRange
-            destination.heroStats["Projectile Speed"] = fetchedData[heroIndex!].projectileSpeed
-            destination.heroStats["Attack Rate"] = fetchedData[heroIndex!].attackRate
-            destination.heroStats["Move Speed"] = fetchedData[heroIndex!].moveSpeed
-            destination.heroStats["Turn Rate"] = fetchedData[heroIndex!].turnRate
+            destination.heroStats["Base Health"] = String(fetchedData[heroIndex!].baseHealth)
+            destination.heroStats["Base Health Regen"] = String(format: "%.1f", fetchedData[heroIndex!].baseHealthRegen ?? "None")
+            destination.heroStats["Base Mana"] = String(fetchedData[heroIndex!].baseMana)
+            destination.heroStats["Base Mana Regen"] = String(fetchedData[heroIndex!].baseManaRegen)
+            destination.heroStats["Base Armor"] = String(fetchedData[heroIndex!].baseArmor)
+            destination.heroStats["Base Magic Resistance"] = String(fetchedData[heroIndex!].baseMr)
+            destination.heroStats["Base Attack Minimum"] = String(fetchedData[heroIndex!].baseAttackMin)
+            destination.heroStats["Base Atack Max"] = String(fetchedData[heroIndex!].baseAttackMax)
+            destination.heroStats["Base Strength"] = String(fetchedData[heroIndex!].baseStr)
+            destination.heroStats["Base Agility"] = String(fetchedData[heroIndex!].baseAgi)
+            destination.heroStats["Base Intellect"] = String(fetchedData[heroIndex!].baseInt)
+            destination.heroStats["Strength Gain"] = String(fetchedData[heroIndex!].strGain)
+            destination.heroStats["Agility Gain"] = String(fetchedData[heroIndex!].agiGain)
+            destination.heroStats["Intellect Gain"] = String(fetchedData[heroIndex!].intGain)
+            destination.heroStats["Attack Range"] = String(fetchedData[heroIndex!].attackRange)
+            destination.heroStats["Projectile Speed"] = String(fetchedData[heroIndex!].projectileSpeed)
+            destination.heroStats["Attack Rate"] = String(fetchedData[heroIndex!].attackRate)
+            destination.heroStats["Move Speed"] = String(fetchedData[heroIndex!].moveSpeed)
+            destination.heroStats["Turn Rate"] = String(format: "%.1f", fetchedData[heroIndex!].turnRate ?? "None")
             
             
             
