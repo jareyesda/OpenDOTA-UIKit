@@ -48,8 +48,16 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
     
     @IBAction func viewGuidePressed(_ sender: Any) {
         
+        var urlName = name
+        
+        if urlName.contains(" ") == true {
+            urlName = urlName.replacingOccurrences(of: " ", with: "_")
+        } else if urlName == "Nature's Prophet" {
+            urlName = "Nature%27s_Prophet"
+        }
+        
         view = webView
-        let url = URL(string: "https://dota2.fandom.com/wiki/\(name)/Guide")!
+        let url = URL(string: "https://dota2.fandom.com/wiki/\(urlName)/Guide")!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
