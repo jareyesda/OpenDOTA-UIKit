@@ -22,7 +22,6 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
     var primaryAttr = ""
     var attackType = ""
     var roles = [Any]()
-//    var heroStats = Dictionary<String,Any>()
     
     var heroStats = [String:Any]()
     
@@ -39,11 +38,12 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
         heroImage.image = image
         heroPrimaryAttr.text = primaryAttr.uppercased()
         heroAttackType.text = attackType.uppercased()
-        print(heroStats)
         
         let cellNib = UINib(nibName: "StatsCell", bundle: nil)
         statsTableView.register(cellNib, forCellReuseIdentifier: "statsCell")
         
+        statsTableView.reloadData()
+                
     }
     
     @IBAction func viewGuidePressed(_ sender: Any) {
@@ -61,8 +61,13 @@ class DetailViewController: UIViewController, WKNavigationDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let stat = Array(heroStats.keys)[indexPath.row]
-        let value = Array(heroStats.values)[indexPath.row]
+        let stats = self.heroStats.sorted(by:{
+            (e1:(String,Any), e2:(String,Any)) -> Bool in
+            e1.0 < e2.0
+        })
+        
+        let stat = stats[indexPath.row].key
+        let value = stats[indexPath.row].value
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "statsCell", for: indexPath) as! StatsCell
         
