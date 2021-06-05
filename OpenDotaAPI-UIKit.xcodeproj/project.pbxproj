@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		201BCAA826656CB4006DD4B8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201BCAA726656CB4006DD4B8 /* DetailViewController.swift */; };
+		203C1821266BE8D80090CDF8 /* HeroManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C1820266BE8D80090CDF8 /* HeroManager.swift */; };
 		20678BD62660929000EDF1FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD52660929000EDF1FB /* AppDelegate.swift */; };
 		20678BD82660929000EDF1FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD72660929000EDF1FB /* SceneDelegate.swift */; };
 		20678BDA2660929000EDF1FB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20678BD92660929000EDF1FB /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		201BCAA726656CB4006DD4B8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		203C1820266BE8D80090CDF8 /* HeroManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeroManager.swift; path = "OpenDotaAPI-UIKit/Controller/HeroManager.swift"; sourceTree = SOURCE_ROOT; };
 		20678BD22660929000EDF1FB /* OpenDotaAPI-UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenDotaAPI-UIKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20678BD52660929000EDF1FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20678BD72660929000EDF1FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		20790C102666D29A00A0906A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				203C1820266BE8D80090CDF8 /* HeroManager.swift */,
 				20678BEA266093A300EDF1FB /* Hero.swift */,
 				20790C1D266AA0D900A0906A /* StatsCell.swift */,
 			);
@@ -176,6 +179,7 @@
 			files = (
 				20678BDA2660929000EDF1FB /* ViewController.swift in Sources */,
 				20678BD62660929000EDF1FB /* AppDelegate.swift in Sources */,
+				203C1821266BE8D80090CDF8 /* HeroManager.swift in Sources */,
 				20678BD82660929000EDF1FB /* SceneDelegate.swift in Sources */,
 				20790C1F266AA0D900A0906A /* StatsCell.swift in Sources */,
 				20678BEB266093A300EDF1FB /* Hero.swift in Sources */,
